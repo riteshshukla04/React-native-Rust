@@ -6,131 +6,137 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  ScrollView,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import NativeMultiply  from './specs/NativeMultiply';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import NativeMultiply from './specs/NativeMultiply';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
-
-
+  const [firstNumber, setFirstNumber] = React.useState('');
+  const [secondNumber, setSecondNumber] = React.useState('');
+  const [result, setResult] = React.useState<number | null>(null);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the recommendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
-  const safePadding = '5%';
-  const multiply = NativeMultiply.multiply(5, 2);
-  console.log(multiply);
+  const handleMultiply = () => {
+    if (!firstNumber || !secondNumber) return;
+    const num1 = parseInt(firstNumber, 10);
+    const num2 = parseInt(secondNumber, 10);
+    const multiplyResult = NativeMultiply.multiply(num1, num2);
+    setResult(multiplyResult);
+  };
+
   return (
-    <View style={backgroundStyle}>
+    <SafeAreaView style={[styles.container, backgroundStyle]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
+      <View style={styles.content}>
+        <Text style={[styles.title, { color: isDarkMode ? Colors.white : Colors.black }]}>
+          Multiply Numbers
+        </Text>
+        
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, { color: isDarkMode ? Colors.white : Colors.black }]}
+            value={firstNumber}
+            onChangeText={setFirstNumber}
+            keyboardType="numeric"
+            placeholder="Enter first number"
+            placeholderTextColor={isDarkMode ? Colors.light : Colors.dark}
+          />
+          <TextInput
+            style={[styles.input, { color: isDarkMode ? Colors.white : Colors.black }]}
+            value={secondNumber}
+            onChangeText={setSecondNumber}
+            keyboardType="numeric"
+            placeholder="Enter second number"
+            placeholderTextColor={isDarkMode ? Colors.light : Colors.dark}
+          />
         </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </View>
+
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={handleMultiply}
+        >
+          <Text style={styles.buttonText}>Multiply</Text>
+        </TouchableOpacity>
+
+        {result !== null && (
+          <View style={styles.resultContainer}>
+            <Text style={[styles.resultText, { color: isDarkMode ? Colors.white : Colors.black }]}>
+              Result: {result}
+            </Text>
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
   },
-  sectionTitle: {
+  content: {
+    flex: 1,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
     fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  inputContainer: {
+    width: '100%',
+    gap: 15,
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
     fontWeight: '600',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  resultContainer: {
+    marginTop: 30,
+    padding: 20,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
   },
-  highlight: {
-    fontWeight: '700',
+  resultText: {
+    fontSize: 20,
+    fontWeight: '600',
   },
 });
 

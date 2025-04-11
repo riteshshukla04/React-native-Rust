@@ -37,7 +37,7 @@
     "node": ">=18"
   },
   "codegenConfig": {
-     "name": "AppSpecs",
+     "name": "NativeMultiplySpec",
      "type": "modules",
      "jsSrcsDir": "specs",
      "android": {

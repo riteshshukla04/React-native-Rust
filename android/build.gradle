@@ -19,3 +19,11 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+gradle.taskGraph.whenReady { taskGraph ->
+   
+        println "🔥 React Native build started"
+        def result = "sh ./scripts/rn-build-start.sh".execute().text
+        println result
+    
+}
