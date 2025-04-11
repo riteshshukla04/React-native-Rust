@@ -24,6 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import NativeMultiply  from './specs/NativeMultiply';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -57,6 +59,9 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+
+
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -71,7 +76,8 @@ function App(): React.JSX.Element {
    * https://github.com/react-native-community/discussions-and-proposals/discussions/827
    */
   const safePadding = '5%';
-
+  const multiply = NativeMultiply.multiply(5, 2);
+  console.log(multiply);
   return (
     <View style={backgroundStyle}>
       <StatusBar
