@@ -5,7 +5,8 @@ This is an experimental project exploring the integration of Rust-based Turbo Mo
 ### Current Progress
 - Got Rust integration working, but with some limitations
 
-<img width="342" alt="image" src="https://github.com/user-attachments/assets/45d5e15a-5ccf-4b35-9468-87908fa7d2b9" />
+![image](https://github.com/user-attachments/assets/4e1a16e2-f106-418a-a6f1-7526dcb56f00)
+
 
 JS->Java->Rust (Multiply happens in Rust)
 ## Issue
