@@ -1,6 +1,6 @@
 # React Native Turbo Modules with Rust
 
-This is an experimental project exploring the integration of Rust-based Turbo Modules in React Native.
+This is one of my weird project exploring the integration of Rust-based Turbo Modules in React Native.
 
 ### Current Progress
 - Got Rust integration working, but with some limitations
