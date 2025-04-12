@@ -3,6 +3,7 @@
 #define TAG "RustDynCall"
 
 
+
 extern "C" double call_rust_runtime(double a, double b) {
     void* handle = dlopen("librustlib.so", RTLD_LAZY);
     if (!handle) {
