@@ -42,6 +42,11 @@
      "jsSrcsDir": "specs",
      "android": {
        "javaPackageName": "com.rustpoc"
+     },
+     "ios": {
+       "modulesProvider": {
+        "NativeMultiply": "NativeMultiplyProvider"
+       }
      }
   }
 }
